@@ -11,12 +11,36 @@
 //			si todo ok, return (1) sino "Error\n(mensaje custom)" y return (0) 
 // escribir ft_exit. imprime mensaje de error correspondiente, free malloc si es necesario, y exit(1).
 
+int key_ctrl(int key, t_game *game_ptr)
+{
+	if (key == LEFT)
+	{
+		game_ptr->pos_char_x -= 60;
+		mlx_destroy_image(game_ptr->mlx_ptr, game_ptr->img_char_ptr);
+		game_ptr->dog_texture = "./xpm/dog_left.xpm";
+		game_ptr->img_char_ptr = mlx_xpm_file_to_image(game_ptr->mlx_ptr, game_ptr->dog_texture, &game_ptr->img_res, &game_ptr->img_res);
+	}
+	else if (key == RIGHT)
+	{
+		game_ptr->pos_char_x += 60;
+		mlx_destroy_image(game_ptr->mlx_ptr, game_ptr->img_char_ptr);
+		game_ptr->dog_texture = "./xpm/dog_right.xpm";
+		game_ptr->img_char_ptr = mlx_xpm_file_to_image(game_ptr->mlx_ptr, game_ptr->dog_texture, &game_ptr->img_res, &game_ptr->img_res);
+	}
+	else if (key == DOWN)
+		game_ptr->pos_char_y += 60;
+	else if (key == UP)
+		game_ptr->pos_char_y -= 60;
+	else if (key == ESC)
+		exit(EXIT_FAILURE); // ft_exit()
+	mlx_put_image_to_window(game_ptr->mlx_ptr, game_ptr->win_ptr, game_ptr->img_char_ptr, game_ptr->pos_char_x, game_ptr->pos_char_y);
+	return (0);
+}
+
 int main(int argc, char **argv)
 {
 	t_game *game_ptr;
 	int i = 60;
-	char *relative_path = "./dog.xpm";
-	void *aya;
 
     if (argc != 2)
 	{
@@ -24,7 +48,7 @@ int main(int argc, char **argv)
 		exit(EXIT_FAILURE);
 	}
 //	fn_verif_map_ext(argv[2]);
-	game_ptr = malloc(sizeof(game_ptr));
+	game_ptr = malloc(sizeof(t_game));
 	if (game_ptr == NULL)
 	{
 		write(1, "Malloc error\n", 14);
@@ -37,11 +61,15 @@ int main(int argc, char **argv)
 	game_ptr->mlx_ptr = mlx_init();
 //	if (mlx_ptr == NULL)
 //		free(game_ptr); write(1, "Usage: ./so_long 'map.ber'\n", 28); exit(EXIT_FAILURE);
+	game_ptr->img_res = 60; // inicializar valor en fn_game_init;
+	game_ptr->pos_char_x = 30; // inicializar valor en fn_game_init;
+	game_ptr->pos_char_y = 30; // inicializar valor en fn_game_init;
+	game_ptr->dog_texture = "./xpm/dog_left.xpm";
 	game_ptr->win_ptr = mlx_new_window(game_ptr->mlx_ptr, 500, 500, "Ayas proyect");
-	mlx_string_put(game_ptr->mlx_ptr, game_ptr->win_ptr, 180, 250, 0xFFFFFF,"Videogame in process...");
-//	mlx_pixel_put(game_ptr->mlx_ptr, game_ptr->win_ptr, 300, 300, 0xFF0000);
-	aya = mlx_xpm_file_to_image(game_ptr->mlx_ptr, relative_path, &i, &i);
-	mlx_put_image_to_window(game_ptr->mlx_ptr, game_ptr->win_ptr, aya, 150, 150);
+	mlx_string_put(game_ptr->mlx_ptr, game_ptr->win_ptr, 150, 400, 0xFFFFFF,"Videogame in process...");
+	game_ptr->img_char_ptr = mlx_xpm_file_to_image(game_ptr->mlx_ptr, game_ptr->dog_texture, &game_ptr->img_res, &game_ptr->img_res);
+	mlx_put_image_to_window(game_ptr->mlx_ptr, game_ptr->win_ptr, game_ptr->img_char_ptr, game_ptr->pos_char_x, game_ptr->pos_char_y);
+	mlx_key_hook(game_ptr->win_ptr, key_ctrl, game_ptr);
 	mlx_loop(game_ptr->mlx_ptr);
 	return (0);
 }
