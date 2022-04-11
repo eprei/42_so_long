@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 10:31:06 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/04/11 13:18:33 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/04/11 16:47:32 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,39 +17,44 @@ void	ft_check_args(int argc, char **argv)
 	if (argc > 2)
 	{
 		write(1, "ERROR\nToo many arguments.\n\
-		Correct usage: ./so_long <filemap.ber>\n", 62);
+Correct usage: ./so_long <filemap.ber>\n", 68);
 		exit(EXIT_FAILURE);
 	}
 	if (argc < 2)
 	{
 		write(1, "ERROR\nArguments are missing.\n\
-		Correct usage: ./so_long <filemap.ber>\n", 65);
+Correct usage: ./so_long <filemap.ber>\n", 71);
 		exit(EXIT_FAILURE);
 	}
 	if ((ft_strnstr(argv[1], ".ber", ft_strlen(argv[1]))) == NULL)
 	{
 		write(1, "ERROR\nIncorrect map extension. Please use a '.ber' file\n\
-		Correct usage: ./so_long <filemap.ber>]\n", 92);
+Correct usage: ./so_long <filemap.ber>\n", 99);
 		exit(EXIT_FAILURE);
 	}
 }
 
-/*  FT_EXIT check with julien or herve if exit() clean all mallocs,
-	if yes: delete next commented code, else: see how to fix the leak that ocurs
-	int i;
-	
-	i = (int)game->map_width;
-	while (i >= 0)
-	{
-		free(game->tab[i - 1]);
-		i--;
-	}
-	free(game); */
-
 void	ft_exit(t_game *game, char *error_message, int exit_status)
 {
+	int	i;
+
+	i = (int)game->map_width;
+	while (i > 0)
+	{
+		free(game->tab[i - 1]);
+		game->tab[i - 1] = NULL;
+		i--;
+	}
+	free(game);
+	game = NULL;
 	ft_printf("%s\n", error_message);
 	exit(exit_status);
+}
+
+int	ft_exit_cross(t_game *game)
+{
+	ft_exit(game, "Game over\n", EXIT_SUCCESS);
+	return (0);
 }
 
 int	main(int argc, char **argv)
@@ -71,6 +76,7 @@ int	main(int argc, char **argv)
 	ft_init_images(game);
 	ft_put_tab_to_window(game);
 	mlx_key_hook(game->win_ptr, key_ctrl, game);
+	mlx_hook(game->win_ptr, 17, 0, ft_exit_cross, game);
 	mlx_loop(game->mlx_ptr);
 	return (0);
 }

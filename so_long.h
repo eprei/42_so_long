@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 10:31:32 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/04/11 13:32:18 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/04/11 14:54:56 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 # define SO_LONG_H
 
 # include "minilibx_opengl_20191021/mlx.h"
-# include <unistd.h>
-# include <stdlib.h>
 # include "libft/libft.h"
 # include "libft/ft_printf.h"
 # include "libft/get_next_line.h"
+# include <unistd.h>
+# include <stdlib.h>
 # include <stdio.h>
 # include <string.h>
 # include <errno.h>

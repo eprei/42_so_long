@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 10:50:41 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/04/11 13:41:09 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/04/11 14:46:37 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	ft_check_characters_sub(t_game *game, int x, int y)
 		(game->tab[y][x] != 'C') && (game->tab[y][x] != 'P') \
 		&& (game->tab[y][x] != 'E'))
 		ft_exit(game, "Error\nThe map can only contain:\
-		'0' '1' 'C' 'E' 'P'", EXIT_FAILURE);
+'0' '1' 'C' 'E' 'P'", EXIT_FAILURE);
 	else if (game->tab[y][x] == 'C')
 		game->count_c++;
 	else if (game->tab[y][x] == 'P')

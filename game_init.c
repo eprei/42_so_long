@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 10:56:55 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/04/11 12:30:29 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/04/11 14:52:36 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	ft_count_lines(t_game *game, char *argv1)
 	close(fd);
 	if (game->map_width < 3)
 		ft_exit(game, "Error\n\
-		The map must have at least three rows", EXIT_FAILURE);
+The map must have at least three rows", EXIT_FAILURE);
 }
 
 void	ft_update_win_size(t_game *game)
